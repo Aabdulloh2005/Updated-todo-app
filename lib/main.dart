@@ -12,10 +12,14 @@ class MainRunner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TodoNotifier(
-      todoController: TodoController(),
-      child: const MaterialApp(
-        home: HomePage(),
+    return NotesNotifier(
+      notesController: NotesController(),
+      child: TodoNotifier(
+        todoController: TodoController(),
+        child: const MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: HomePage(),
+        ),
       ),
     );
   }

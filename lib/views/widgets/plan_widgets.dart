@@ -9,17 +9,16 @@ class PlanWidget extends StatelessWidget {
   final int i;
   const PlanWidget({required this.model, required this.i, super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
-      void onDone(int i) {
+    void onDone(int i) {
       TodoNotifier.of(context).toggleDone(i);
-  }
+    }
 
-  void onEdited(String title, String date, int i) {
+    void onEdited(String title, String date, int i) {
       TodoNotifier.of(context).editPlan(title, date, i);
-  }
+    }
+
     return Card(
       elevation: 2,
       child: ListTile(
@@ -39,8 +38,7 @@ class PlanWidget extends StatelessWidget {
         title: Text(
           model.title,
           style: TextStyle(
-            decoration:
-                model.checkDone ? TextDecoration.lineThrough : null,
+            decoration: model.checkDone ? TextDecoration.lineThrough : null,
             decorationColor: Colors.black,
             decorationThickness: 2,
             fontSize: 18,

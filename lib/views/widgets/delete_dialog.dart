@@ -3,8 +3,9 @@ import 'package:homework_45/providers/todo_notifier.dart';
 
 class DeleteDialog extends StatelessWidget {
   final int index;
+  final bool isNote;
 
-  const DeleteDialog({required this.index, super.key});
+  const DeleteDialog({required this.index, this.isNote = false, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,11 @@ class DeleteDialog extends StatelessWidget {
             backgroundColor: Colors.red,
           ),
           onPressed: () {
-            TodoNotifier.of(context).deletePlan(index);
+            if (isNote) {
+              NotesNotifier.of(context).deletePlan(index);
+            } else {
+              TodoNotifier.of(context).deletePlan(index);
+            }
             Navigator.pop(context);
           },
           child: const Text("Yes"),
