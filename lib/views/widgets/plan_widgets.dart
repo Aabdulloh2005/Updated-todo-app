@@ -4,37 +4,29 @@ import 'package:homework_45/providers/todo_notifier.dart';
 import 'package:homework_45/views/widgets/add_dialog.dart';
 import 'package:homework_45/views/widgets/delete_dialog.dart';
 
-class PlanWidget extends StatefulWidget {
+class PlanWidget extends StatelessWidget {
   final TodoModel model;
   final int i;
   const PlanWidget({required this.model, required this.i, super.key});
 
-  @override
-  State<PlanWidget> createState() => _PlanWidgetState();
-}
 
-class _PlanWidgetState extends State<PlanWidget> {
-  void onDone(int i) {
-    setState(() {
-      TodoNotifier.of(context).toggleDone(i);
-    });
-  }
-
-  void onEdited(String title, String date, int i) {
-    setState(() {
-      TodoNotifier.of(context).editPlan(title, date, i);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
+      void onDone(int i) {
+      TodoNotifier.of(context).toggleDone(i);
+  }
+
+  void onEdited(String title, String date, int i) {
+      TodoNotifier.of(context).editPlan(title, date, i);
+  }
     return Card(
       elevation: 2,
       child: ListTile(
         leading: InkWell(
           borderRadius: BorderRadius.circular(30),
-          onTap: () => onDone(widget.i),
-          child: widget.model.checkDone
+          onTap: () => onDone(i),
+          child: model.checkDone
               ? const Icon(
                   Icons.check_circle,
                   color: Colors.green,
@@ -45,19 +37,19 @@ class _PlanWidgetState extends State<PlanWidget> {
                 ),
         ),
         title: Text(
-          widget.model.title,
+          model.title,
           style: TextStyle(
             decoration:
-                widget.model.checkDone ? TextDecoration.lineThrough : null,
+                model.checkDone ? TextDecoration.lineThrough : null,
             decorationColor: Colors.black,
             decorationThickness: 2,
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: widget.model.checkDone ? Colors.grey.shade600 : null,
+            color: model.checkDone ? Colors.grey.shade600 : null,
           ),
         ),
         subtitle: Text(
-          widget.model.date,
+          model.date,
           style: TextStyle(color: Colors.grey.shade600),
         ),
         trailing: Row(
@@ -68,11 +60,11 @@ class _PlanWidgetState extends State<PlanWidget> {
                 final data = await showDialog<Map<String, dynamic>>(
                   context: context,
                   builder: (context) {
-                    return AddDialog(model: widget.model);
+                    return AddDialog(model: model);
                   },
                 );
                 if (data != null) {
-                  onEdited(data["title"], data["date"], widget.i);
+                  onEdited(data["title"], data["date"], i);
                 }
               },
               icon: const Icon(
@@ -85,7 +77,7 @@ class _PlanWidgetState extends State<PlanWidget> {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return DeleteDialog(index: widget.i);
+                    return DeleteDialog(index: i);
                   },
                 );
               },
